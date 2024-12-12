@@ -114,6 +114,8 @@ This table stores detailed information about province within different countries
 
 ### courses
 
+This table stores comprehensive information about courses offered by schools and branches, including pricing, duration, status, and additional data
+
 | Column          | Datatype   |Mandatory	| Description                                    |
 |--------------   |:----------:|:---------:|------------------------------------------------|
 | `Id`                | INT        | Yes | Unique identifier for each Course record  |
@@ -135,3 +137,53 @@ This table stores detailed information about province within different countries
 | `updated_by`        | INT        | No  | Identifies the user who last updated the record      |
 | `imported`          | TINYINT    | No  | Flag indicating if the Course was imported from another source |
 | `customX`           | TEXT       | No  | Additional flexible text fields for storing extra course related information   |
+
+### coursesenrolled
+
+This table tracks student course enrollments, including progress, completion status, and associated data across schools and branches.
+
+| Column          | Datatype   |Mandatory	| Description                                    |
+|--------------   |:----------:|:---------:|------------------------------------------------|
+| `id`                 | INT        | Yes | Unique identifier for each course enrollment record |
+| `school`             | INT        | Yes | ID of the school where the course is enrolled|
+| `branch`             | INT        | Yes | ID of the branch where the course is enrolled |
+| `student`            | INT        | Yes | ID of the student enrolled in the course |
+| `course`             | INT        | Yes | ID of the course being enrolled|
+| `created_at`         | DATETIME   | Yes | Datetime of record creation |
+| `updated_at`         | DATETIME   | Yes | Datetime of last update   |
+| `completed_theory`   | DOUBLE     | No  | Completion percentage for theory component |
+| `completed_practical`| DOUBLE     | No  | Completion percentage for practical component |
+| `completed_on`       | DATE       | No  | Date of course completion |
+| `status`             | ENUM       | Yes | Status of course enrollment `Completed` or `Pending` |
+| `progress_theory`    | INT        | No  | Progress tracking for theory component |
+| `progress_practical` | INT        | No  | Progress tracking for practical component |
+| `progress_total`     | INT        | No  | Overall course progress |
+| `deleted`            | TINYINT    | No  | Soft delete flag (`0` = not deleted, `1` = deleted)     |
+| `created_by`         | INT        | Yes | Identifies the user who created the record      |
+| `updated_by`         | INT        | No  | Identifies the user who last updated the record    |
+
+### currencies
+
+This table stores comprehensive information about world currencies, providing details for global financial references and transactions.
+
+| Column          | Datatype   |Mandatory	| Description                                    |
+|--------------   |:----------:|:---------:|------------------------------------------------|
+| `id`            | INT        | Yes | Unique identifier for each Currencies record |
+| `name`          | VARCHAR    | Yes | Full name of the currency  |
+| `code`          | VARCHAR    | Yes | International currency code  |
+| `symbol`        | VARCHAR    | Yes | Currency symbol  |
+
+### dataimports
+
+This table is designed to track data import processes, logging details about Excel file imports, their status, and any associated errors
+
+| Column          | Datatype   |Mandatory	| Description                                    |
+|--------------   |:----------:|:---------:|------------------------------------------------|
+| `id`            | INT     | Yes | Unique identifier for each data import record |
+| `imported_by`   | INT     | No  | User ID of the person who initiated the import  |
+| `status`        | VARCHAR | No  | Current status of the import process |
+| `excel_filename`| VARCHAR | No  | Name of the imported Excel file |
+| `excel_filesize`| BIGINT  | No  | Size of the imported Excel file |
+| `error_count`   | INT     | No  | Number of errors encountered during import |
+| `error_log`     | LONGTEXT| No  | Detailed log of errors that occurred during import |
+| `importlog_url` | VARCHAR | No  | URL or path to the detailed import log |
