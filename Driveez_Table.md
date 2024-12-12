@@ -23,5 +23,24 @@ The `availability` table is designed to track instructor availability and specia
 | `updated_at` | DATETIME   | No | Datetime of last update                                      |
 | `created_by` | INT        | Yes | Identifies the user who created the record                   |
 | `updated_by` | INT        | No | Identifies the user who last updated the record              |
-| `deleted`    | INT        | No | Used for soft deletion without removing the record           |
-    
+| `deleted`    | TINYINT    | No | Soft delete flag (0 = not deleted, 1 = deleted)           |
+
+
+### branchattachments
+
+This Table to store attachments associated with branches, tracking document uploads, their metadata, and related user information.
+
+| Column          | Datatype   |Mandatory	| Description                                    |
+|--------------   |:----------:|----------- |------------------------------------------------|
+| `ID`            | INT        | Yes | Primary key of the table          |
+| `uploaded_by`   | INT        | Yes | ID of the user who uploaded |
+| `attachment_for`| INT        | Yes | ID of the branch to which the attachment is linked   |
+| `attachment`    | VARCHAR    | Yes | path of the uploaded attachment in S3             |
+| `name`          | VARCHAR    | Yes | Display name of the attachment    |
+| `type`          | ENUM       | Yes | Type of attachment (currently limited to 'document')      |
+| `created_at`    | DATETIME   | Yes | Datetime of record creation              |
+| `updated_at`    | DATETIME   | No  | Datetime of last update             |
+| `deleted`       | TINYINT    | No  | Soft delete flag (0 = not deleted, 1 = deleted)     |
+| `created_by`    | INT        | Yes | Identifies the user who created the record      |
+| `updated_by`    | INT        | No  | Identifies the user who last updated the record      |
+
