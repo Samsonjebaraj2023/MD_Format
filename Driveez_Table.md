@@ -7,7 +7,7 @@ Here is a detailed overview of Tables and columns in the Driveez database:
 The `availability` table is designed to track instructor availability and special day schedules across different branches and schools. It allows for flexible scheduling management with detailed time and status tracking
 
 | Column       | Datatype   |Mandatory	| Description                                                  |
-|--------------|:----------:|------|--------------------------------------------------------|
+|--------------|:----------:|:---------:|--------------------------------------------------------|
 | `ID`         | INT        | Yes | Primary key of the table                                     |
 | `branch`     | INT        | Yes | Indicates the branch                                         |
 | `school`     | INT        | Yes | Specifies the school                                         |
@@ -31,7 +31,7 @@ The `availability` table is designed to track instructor availability and specia
 This Table to store attachments associated with branches, tracking document uploads, their metadata, and related user information.
 
 | Column          | Datatype   |Mandatory	| Description                                    |
-|--------------   |:----------:|----------- |------------------------------------------------|
+|--------------   |:----------:|:---------: |------------------------------------------------|
 | `ID`            | INT        | Yes | Primary key of the table          |
 | `uploaded_by`   | INT        | Yes | ID of the user who uploaded |
 | `attachment_for`| INT        | Yes | ID of the branch to which the attachment is linked   |
@@ -49,7 +49,7 @@ This Table to store attachments associated with branches, tracking document uplo
 This table stores information about different branches, including their contact details, associated school, status, and additional custom fields.
 
 | Column          | Datatype   |Mandatory	| Description                                    |
-|--------------   |:----------:|----------- |------------------------------------------------|
+|--------------   |:----------:|:---------: |------------------------------------------------|
 | `ID`            | INT        | Yes | Primary key of the table          |
 | `name`          | VARCHAR    | Yes | Name of the branch      |
 | `school`        | INT        | Yes | ID of the school to which the branch belongs    |
@@ -74,7 +74,7 @@ This table stores information about different branches, including their contact 
 This table tracks messages sent to branches, including communication details and delivery status
 
 | Column          | Datatype   |Mandatory	| Description                                    |
-|--------------   |:----------:|----------- |------------------------------------------------|
+|--------------   |:----------:|:---------:|------------------------------------------------|
 | `status`        | ENUM       | Yes | Current delivery status of the message `Sent` or `Failed` or `Queued` or`Sending`     |
 | `id`            | INT        | Yes | Primary key of the table          |
 | `receiver`      | INT        | Yes | ID of the branch receiving the message     |
@@ -92,7 +92,7 @@ This table tracks messages sent to branches, including communication details and
 This table stores information about different countries, providing a comprehensive list with unique identifiers, country codes, and names.
 
 | Column          | Datatype   |Mandatory	| Description                                    |
-|--------------   |:----------:|----------- |------------------------------------------------|
+|--------------   |:----------:|:---------:|------------------------------------------------|
 | `ID`            | INT        | Yes | Unique identifier for each country record   |
 | `code`          | VARCHAR    | Yes | Short country code like `India` > `IND`  |
 | `name`          | VARCHAR    | Yes |  Full name of the country   |
