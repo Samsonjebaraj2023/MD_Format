@@ -8,21 +8,20 @@ The `availability` table is designed to track instructor availability and specia
 
 | Column       | Datatype   |Mandatory	| Description                                                  |
 |--------------|:----------:|------|--------------------------------------------------------|
-| `ID`         | INT        | Mandatory | Primary key of the table                                     |
-| `branch`     | INT        | Mandatory | Indicates the branch                                         |
-| `school`     | INT        | Mandatory | Specifies the school                                         |
-| `instructor` | INT        | Mandatory | Identifies the instructor                                    |
-| `type`       | ENUM       | Mandatory | Regular availability or specialday                           |
-| `special_date` | DATE      | Optional | Used for specific date-based availability or special day scheduling |
-| `sub`        | INT        | Optional | Potentially used for substitute instructor tracking          |
-| `day_of_week`| ENUM       | Mandatory | It specifies the day of a week                               |
-| `start_time` | TIME       | Mandatory | Time of availability start                                   |
-| `end_time`   | TIME       | Mandatory | Time of availability end                                     |
-| `status`     | ENUM       | Mandatory | It specifies Opened or Closed                                |
-| `created_at` | DATETIME   | Mandatory | Datetime of record creation                                  |
-| `updated_at` | DATETIME   | Optional | Datetime of last update                                      |
-| `created_by` | INT        | Mandatory | Identifies the user who created the record                   |
-| `updated_by` | INT        | Optional | Identifies the user who last updated the record              |
-| `deleted`    | INT        | Optional | Used for soft deletion without removing the record           |
-
-
+| `ID`         | INT        | Yes | Primary key of the table                                     |
+| `branch`     | INT        | Yes | Indicates the branch                                         |
+| `school`     | INT        | Yes | Specifies the school                                         |
+| `instructor` | INT        | Yes | Identifies the instructor                                    |
+| `type`       | ENUM       | Yes | Regular availability or specialday                           |
+| `special_date` | DATE      | No | Used for specific date-based availability or special day scheduling |
+| `sub`        | INT        | No | Potentially used for substitute instructor tracking          |
+| `day_of_week`| ENUM       | Yes | It specifies the day of a week                               |
+| `start_time` | TIME       | Yes | Time of availability start                                   |
+| `end_time`   | TIME       | Yes | Time of availability end                                     |
+| `status`     | ENUM       | Yes | It specifies Opened or Closed                                |
+| `created_at` | DATETIME   | Yes | Datetime of record creation                                  |
+| `updated_at` | DATETIME   | No | Datetime of last update                                      |
+| `created_by` | INT        | Yes | Identifies the user who created the record                   |
+| `updated_by` | INT        | No | Identifies the user who last updated the record              |
+| `deleted`    | INT        | No | Used for soft deletion without removing the record           |
+    
