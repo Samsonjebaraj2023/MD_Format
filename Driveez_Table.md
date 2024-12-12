@@ -93,6 +93,45 @@ This table stores information about different countries, providing a comprehensi
 
 | Column          | Datatype   |Mandatory	| Description                                    |
 |--------------   |:----------:|:---------:|------------------------------------------------|
-| `ID`            | INT        | Yes | Unique identifier for each country record   |
+| `Id`            | INT        | Yes | Unique identifier for each country record   |
 | `code`          | VARCHAR    | Yes | Short country code like `India` > `IND`  |
 | `name`          | VARCHAR    | Yes |  Full name of the country   |
+
+
+### countryprovinces
+
+This table stores detailed information about province within different countries, including their tax-related information and unique identifiers.
+
+| Column          | Datatype   |Mandatory	| Description                                    |
+|--------------   |:----------:|:---------:|------------------------------------------------|
+| `Id`            | INT        | Yes | Unique identifier for each countryprovinces records  |
+| `name`          | VARCHAR   | Yes | Full name of the province  |
+| `gst`           | DECIMAL    | No  | Goods and Services Tax (GST) rate for the province   |
+| `pst`           | DECIMAL     | No  | Provincial Sales Tax (PST) rate   |
+| `hst`           | DECIMAL    | No  | Harmonized Sales Tax (HST) rate      |
+| `country_code`  | VARCHAR   | Yes | Country code for the province |
+| `province_code` | VARCHAR    | Yes | Unique code identifying the province within its country  |
+
+### courses
+
+| Column          | Datatype   |Mandatory	| Description                                    |
+|--------------   |:----------:|:---------:|------------------------------------------------|
+| `Id`                | INT        | Yes | Unique identifier for each Course record  |
+| `school`            | INT        | Yes | ID of the school offering the course  |
+| `branch`            | INT        | Yes | ID of the branch offering the course  |
+| `name`              | VARCHAR    | Yes | Full name of the course  |
+| `price`             | INT        | Yes |  Course price  |
+| `image`             | VARCHAR    | Yes | Path of the course image  |
+| `duration`          | DOUBLE     | Yes | Length of the course in hours (theory class + partical class) |
+| `period`            | VARCHAR    | Yes | Time period for course duration  |
+| `practical_classes` |  DOUBLE    | Yes | Duration of practical classes in hours  |
+| `theory_classes`    |  DOUBLE    | Yes | Duration of theory classes in hours  |
+| `status`            | ENUM       | Yes | Availability of the course `Available` or `Unavailable` |
+| `notes`             | LONGTEXT   | No  | Description about the course |
+| `created_at`        | DATETIME   | Yes | Datetime of record creation              |
+| `updated_at`        | DATETIME   | No  | Datetime of last update             |
+| `deleted`           | TINYINT    | No  | Soft delete flag (`0` = not deleted, `1` = deleted)     |
+| `created_by`        | INT        | Yes | Identifies the user who created the record      |
+| `updated_by`        | INT        | No  | Identifies the user who last updated the record      |
+| `imported`          | TINYINT    | No  | Flag indicating if the Course was imported from another source |
+| `customX`           | TEXT       | No  | Additional flexible text fields for storing extra course related information   |
