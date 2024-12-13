@@ -187,3 +187,107 @@ This table is designed to track data import processes, logging details about Exc
 | `error_count`   | INT     | No  | Number of errors encountered during import |
 | `error_log`     | LONGTEXT| No  | Detailed log of errors that occurred during import |
 | `importlog_url` | VARCHAR | No  | URL or path to the detailed import log |
+
+### fleet
+
+This table is for managing vehicles in an training for a driving school 
+
+| Column          | Datatype   |Mandatory	| Description                                    |
+|--------------   |:----------:|:---------:|------------------------------------------------|
+| `id`            | INT     | Yes | Unique identifier for each fleet vehicle entry |
+| `carno_`        | VARCHAR | Yes | car number |
+| `carplate`      | VARCHAR | Yes | Vehicle's license plate number |
+| `make`          | VARCHAR | Yes | Vehicle manufacturer (e.g., Toyota, Ford) |
+| `model`         | VARCHAR | Yes | Specific vehicle model |
+| `modelyear`     | VARCHAR | Yes | Year of the vehicle model |
+| `school`        | INT     | Yes | Associates the vehicle with a specific school |
+| `branch`        | INT     | Yes | Associates the vehicle with a specific branch |
+| `instructor`    | INT     | No  | Links the vehicle to a specific instructor |
+| `created_at`    | DATETIME| Yes | Datetime of record creation              |
+| `updated_at`    | DATETIME| No  | Datetime of last update             |
+| `deleted`       | TINYINT | No  | Soft delete flag (`0` = not deleted, `1` = deleted)     |
+| `created_by`    | INT     | Yes | Identifies the user who created the record      |
+| `updated_by`    | INT     | No  | Identifies the user who last updated the record      |
+| `imported`      | TINYINT | No  | Flag indicating if the Course was imported from another source |
+| `customX`       | TEXT    | No  | Additional flexible text fields for storing extra fleet related information   |
+
+### invoices
+
+This table is designed to manage financial transactions and  tracking detailed invoice information.
+
+| Column          | Datatype   |Mandatory	| Description                                    |
+|--------------   |:----------:|:---------:|------------------------------------------------|
+| `id`            | INT     | Yes | Unique identifier for each Invoice records |
+| `reference`     | INT     | Yes | Reference number for the invoice |
+| `school`        | INT     | Yes | Associates invoice with a specific school |
+| `branch`        | INT     | Yes | Associates invoice with a specific branch |
+| `student`       | INT     | Yes | Identifies the student for the invoice |
+| `course`        | INT     | Yes | Links invoice to a specific course |
+| `product`       | INT     | Yes | Links invoice to a specific product |
+| `amount`        | DECIMAL | Yes | Total invoice amount |
+| `item`          | TEXT    | Yes | Describes the invoiced items |
+| `amountpaid`    | DECIMAL | Yes | Amount paid |
+| `raw_cost`      | DECIMAL | No  | Raw cost for paticular course/product |
+| `tax_cost`      | DECIMAL | No  | Tax cost for paticular course/product |
+| `payment`       | INT     | No  | links to payments table |
+| `created_at`    | DATETIME| Yes | Datetime of record creation              |
+| `updated_at`    | DATETIME| No  | Datetime of last update             |
+| `deleted`       | TINYINT | No  | Soft delete flag (`0` = not deleted, `1` = deleted)     |
+| `created_by`    | INT     | Yes | Identifies the user who created the record      |
+| `updated_by`    | INT     | No  | Identifies the user who last updated the record      |
+
+### languages
+
+This table is store a complete list of world languages with their unique identifiers and standardized codes
+
+| Column          | Datatype   |Mandatory	| Description                                    |
+|--------------   |:----------:|:---------:|------------------------------------------------|
+| `id`            | INT     | Yes | Unique identifier for each Language records |
+| `code`          | INT     | Yes | Code for the language (e.g., en, fr, es) |
+| `name`          | VARCHAR | Yes | Full name of the language |
+
+### mail_queue
+
+This table is will manage and track email sending processes and tracking email communications
+
+| Column          | Datatype   |Mandatory	| Description                                    |
+|--------------   |:----------:|:---------:|------------------------------------------------|
+| `id`            | INT     | Yes | Unique identifier for each email queue entry |
+| `to_email`      |VARCHAR  | Yes | Recipient's email address |
+| `to_name`       | VARCHAR | Yes | Recipient's name |
+| `subject`       |VARCHAR  | Yes | Email subject line|
+| `message`       | LONGTEXT| Yes | Full email message content |
+| `styles`        | LONGTEXT| No  | styling information for HTML emails |
+| `view_data`     | VARCHAR | No  | Reference to a view template  |
+| `attachments`   |LONGTEXT | No  | Stores information about email attachments |
+| `status`        |ENUM     | Yes | Tracks the current state of the email in the queue `Send` `Failed` `Queued` `Sending` |
+| `created_at`    | DATETIME| Yes | Datetime of record creation              |
+| `updated_at`    | DATETIME| No  | Datetime of last update             |
+
+### master
+
+This Table stores a Vehical Type , Language and Location information
+
+| Column          | Datatype   |Mandatory	| Description                                    |
+|--------------   |:----------:|:---------:|------------------------------------------------|
+| `id`            | INT     | Yes | Unique identifier for each master record |
+| `code`            | VARCHAR   | Yes | Stores a  code for Vehicle `VT` , Language `LN`, Location Serviced `SU` |
+| `data`            | VARCHAR   | Yes | Name of the Paticular data |
+| `country_code`            | VARCHAR | Yes |Stores a country code |
+| `country_id`            | INT     | Yes | Stores a country ID |
+
+# notifications
+
+This table is to manage a about detailed  notification system information
+
+| Column          | Datatype   |Mandatory	| Description                                    |
+|--------------   |:----------:|:---------:|------------------------------------------------|
+| `id`            | INT     | Yes | Unique identifier for each notification |
+| `user`          | INT     | Yes | Identifies the recipient of the notification |
+| `school`        | INT     | Yes | Associates the notification with a specific school |
+| `branch`        | INT     | Yes | Associates the notification with a specific branch |
+| `type`          | ENUM    | Yes | notification type `newaccount` `payment` `delete` `message` `calender` |
+| `class`         | ENUM    | Yes | Class Type `personal` `school` `branch` `system` |
+| `message`       | TEXT    | Yes | Contains the actual notification content|
+| `created_at`    | DATETIME| Yes | Datetime of record creation              |
+| `read`          | BIT     | No  |Tracks whether the notification has been read 0 `Unread` 1 `Read` |
