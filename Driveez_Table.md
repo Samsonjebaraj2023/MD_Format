@@ -276,7 +276,7 @@ This Table stores a Vehical Type , Language and Location information
 | `country_code`            | VARCHAR | Yes |Stores a country code |
 | `country_id`            | INT     | Yes | Stores a country ID |
 
-# notifications
+### notifications
 
 This table is to manage a about detailed  notification system information
 
@@ -291,3 +291,292 @@ This table is to manage a about detailed  notification system information
 | `message`       | TEXT    | Yes | Contains the actual notification content|
 | `created_at`    | DATETIME| Yes | Datetime of record creation              |
 | `read`          | BIT     | No  |Tracks whether the notification has been read 0 `Unread` 1 `Read` |
+
+### payfasttransaction
+
+This table is will track payment transactions, specifically for PayFast payment gateway integrations
+
+| Column          | Datatype   |Mandatory	| Description                                    |
+|--------------   |:----------:|:---------:|------------------------------------------------|
+| `id`              | INT     | Yes | Unique identifier for each transaction |
+| `m_payment_id`    | INT     | Yes | Unique identifier for each notification |
+| `pf_payment_id`   | INT     | Yes | PayFast-specific payment identifier |
+| `payment_status`  |VARCHAR  | Yes | Tracks the current status of the payment |
+| `item_name`       | LONGTEXT| Yes | Name of the purchased item |
+| `item_description`| LONGTEXT| No  | Detailed description of the purchased item |
+| `amount_gross`    | DOUBLE  | Yes | Total transaction amount before fees |
+| `amount_fee`      | DOUBLE  | Yes | Transaction processing fees |
+| `amount_net`      | DOUBLE  | Yes | Net amount after deducting fees |
+| `custom_strX`     | VARCHAR | No  | Allows for additional string-based metadata |
+| `custom_intX`     | INT     | No  | Allows for additional integer-based metadata|
+| `name_first`      | VARCHAR | Yes | Student's first name |
+| `name_last`       | VARCHAR | Yes | Student's last name |
+| `email_address`   |VARCHAR  | Yes | Student's E-mail address  |
+| `merchant_id`     | VARCHAR | Yes | Merchant identification|
+| `signature`       | LONGTEXT| Yes | Transaction signature for verification |
+| `created_at`      | DATETIME| Yes | Datetime of record creation              |
+| `updated_at`      | DATETIME| No  | Datetime of last update             |
+| `deleted`         | BIT     | No  | Soft delete flag (`0` = not deleted, `1` = deleted)     |
+| `created_by`      | INT     | No  | Identifies the user who created the record      |
+| `updated_by`      | INT     | No  | Identifies the user who last updated the record      |
+
+### payments
+
+This table tracks transactions across various payment processors, capturing detailed payment information for different types of transactions within the system
+
+| Column          | Datatype   |Mandatory	| Description                                    |
+|--------------   |:----------:|:---------:|------------------------------------------------|
+| `id`              | INT     | Yes | Unique identifier for each payment record |
+| `transaction_id`  | VARCHAR | Yes |  Unique identifier for the transaction from the payment processor |
+| `processor`       | ENUM    | Yes | Payment processor used for the transaction (`PayFast`, `Stripe`, `PayPal`, etc.) |
+| `status`          | ENUM    | Yes | Status of the payment transaction (`STARTED` `COMPLETED` `FAILED` `INPROCESS` ) |
+| `user`            | INT     | Yes | User associated with the payment |
+| `payment_type`    | ENUM    | Yes | Type of payment being processed (`STUDENT_ACTIVATION` `COURSE_FEE` `PRODUCT_FEE`) |
+| `amount`          | DECIMAL | Yes | Total amount of the transaction |
+| `currency`        | VARCHAR | Yes | Currency of the transaction |
+| `invoice`         | INT     | No  | Associated invoice for the payment |
+| `course`          | INT     | No  | Associated course for the payment |
+| `client_secret`   | VARCHAR | No  | Client authentication |
+| `product`         | INT     | No  | Reference to the associated product |
+| `raw_cost`        | DECIMAL | No  | Base cost before taxes |
+| `tax_cost`        | DECIMAL | No  | Tax amount associated with the transaction |
+| `created_at`      |TIMESTAMP| Yes | Datetime of record creation              |
+| `updated_at`      | DATETIME| No  | Datetime of last update             |
+| `created_by`      | INT     | No  | Identifies the user who created the record      |
+| `updated_by`      | INT     | No  | Identifies the user who last updated the record      |
+| `deleted`         | TINYINT | No  | Soft delete flag (`0` = not deleted, `1` = deleted)     |
+
+### products 
+
+This table is Used to manage a comprehensive product catalog with detailed information and tracking capabilities.
+
+| Column          | Datatype   |Mandatory	| Description                                    |
+|--------------   |:----------:|:---------:|------------------------------------------------|
+| `id`                 | INT     | Yes | Unique identifier for each product |
+| `product_type`       | VARCHAR | Yes | Categorizes the type of product `Digital` `Physical` |
+| `product_name`       |  VARCHAR| Yes | Stores the name of the product|
+| `product_description`| LONGTEXT| Yes | Provides a detailed description of the product |
+| `price`              | INT     | Yes | Stores the product price |
+| `thumbnail`          | VARCHAR | Yes | URL to the product's thumbnail image |
+| `url`                | VARCHAR | No  | stores a link to the product page or additional information |
+| `status`             | VARCHAR | YeS | Tracks the current status of the product |
+| `created_by`         | INT     | No  | Identifies the user who created the record      |
+| `updated_by`         | INT     | No  | Identifies the user who last updated the record      |
+| `created_on`         | DATETIME| No  | Datetime of record creation              |
+| `updated_on`         | DATETIME| Yes | Datetime of last update             |
+
+### product_enrolled
+
+This table tracks student enrollments in products across different schools and branches, capturing detailed information about product registration and administrative metadata
+
+| Column          | Datatype   |Mandatory	| Description                                    |
+|--------------   |:----------:|:---------:|------------------------------------------------|
+| `id`                 | INT     | Yes | Unique identifier for each product enrollment record |
+| `school`             | INT     | Yes | School associated with the product enrollment |
+| `branch`             | INT     | Yes | Branch associated with the product enrollment |
+| `student`            | INT     | Yes | Student  enrolled in the product |
+| `product`            | INT     | Yes | Product being enrolled in |
+| `created_by`         | INT     | Yes | User ID of the record creator     |
+| `updated_by`         | INT     | Yes | User ID of the last record updater      |
+| `created_on`         | DATETIME| Yes | Datetime of record creation              |
+| `updated_on`         | DATETIME| Yes | Datetime of last update             |
+
+### pushnotification_queue
+
+This table manages a queue of push notifications, tracking their status, content, and delivery progress across the system.
+
+| Column          | Datatype   |Mandatory	| Description                                    |
+|--------------   |:----------:|:---------:|------------------------------------------------|
+| `id`            | INT      | Yes | Unique identifier for each push notification queue records |
+| `token`         |LONGTEXT  | Yes | user token for push notification delivery |
+| `title`         | LONGTEXT | Yes | Title of the push notification |
+| `body`          | LONGTEXT | Yes | Content body of the push notification |
+| `created_at`    |TIMESTAMP |Yes  | Datetime of record creation              |
+| `updated_at`    | TIMESTAMP| Yes | Datetime of last update             |
+| `status`        | ENUM     | Yes | Current status of the push notification `Send` `Failed` `Queued` `Sending` |
+
+### reminders
+
+This table manages reminder configurations for different schools, defining systematic notifications for classes and payments via email or SMS
+
+| Column          | Datatype   |Mandatory	| Description                                    |
+|--------------   |:----------:|:---------:|------------------------------------------------|
+| `id`            | INT      | Yes | Unique identifier for each reminder configuration |
+| `school`        | INT      | Yes | School associated with the reminder configuration |
+| `subject`       |VARCHAR   | Yes |  Subject of the reminder |
+| `days`          | INT      | Yes | Number of days relative to the due date for sending the reminder |
+| `message`       | TEXT     | Yes | Detailed message content for the reminder |
+| `type`          | ENUM     | Yes | Type of reminder being configured `class` `Payment` |
+| `send_via`      | ENUM     | Yes | Communication channel for sending reminders `SMS` `Email` |
+| `id`            | ENUM     | Yes |  Timing of reminder relative to the due date `before_due` `after_due` |
+
+### reports
+
+This table stores predefined report configurations, including query details, filters, and metadata for generating dynamic system reports across various domains.
+
+| Column          | Datatype   |Mandatory	| Description                                    |
+|--------------   |:----------:|:---------:|------------------------------------------------|
+| `id`            | INT      | Yes | Unique identifier for each report configuration |
+| `label`         | VARCHAR  | Yes |  Title of the report |
+| `key`           | VARCHAR  | Yes | Unique system identifier for the report |
+| `query`         | LONGTEXT | Yes |  Database query used to generate the report |
+| `status`        | VARCHAR  | Yes |  Current status of the report configuration |
+| `filters`       | LONGTEXT | Yes | structured data defining report filter configurations (`date` , `course` , `student` .. )|
+| `description`   |LONGTEXT  | Yes | Detailed explanation of the report's purpose and contents |
+
+### schoolmessages
+
+This table tracks communication messages sent within the school system, capturing details of SMS and email communications across schools and branches.
+
+| Column          | Datatype   |Mandatory	| Description                                    |
+|--------------   |:----------:|:---------:|------------------------------------------------|
+| `id`            | INT      | Yes | Unique identifier for each school message record |
+| `receiver`      | INT      | Yes | Identifier of the message receiver |
+| `type`          | ENUM     | Yes | Communication channel for sending reminders `SMS` `Email` |
+| `contact`       |VARCHAR   | Yes | Contact information|
+| `subject`       | VARCHAR  | Yes |  Message subject  |
+| `message`       | LONGTEXT | Yes | Full message content |
+| `sent_at`       | TIMESTAMP| Yes | Timestamp when the message was sent |
+| `status`        | ENUM     | Yes | Delivery status of the message `Sent` `Failed` |
+| `school`        | INT      | Yes | Unique identifier for each report configuration |
+| `branch`        | INT      | Yes | Unique identifier for each report configuration |
+
+### schools
+
+ Column          | Datatype   |Mandatory	| Description                                    |
+|--------------   |:----------:|:---------:|------------------------------------------------|
+| `id`                      | INT     | Yes | Unique identifier for each school record |
+| `name`                    | VARCHAR | Yes | School name |
+| `email`                   | VARCHAR | Yes | School contact email |
+| `phone`                   | VARCHAR | Yes | School contact phone number |
+| `address`                 | VARCHAR | Yes | School physical address |
+| `currency`                | VARCHAR | Yes | Specifies the default currency for the school |
+| `timezone`                | VARCHAR | Yes |  Sets the default timezone for the school |
+| `payment_reminders`       | ENUM    | Yes | Payment reminder settings `on` `off` |
+| `status`                  | ENUM    | Yes | Current operational status of the school `Active` `Suspended` |
+| `class_reminders`         | ENUM    | Yes | Class reminder settings `on` `off` |
+| `created_at`              | DATETIME| Yes | Automatically records when the school record was created |
+| `country_code`            | VARCHAR | Yes | School's country identifier |
+| `language_code`           | VARCHAR | Yes | School's language setting |
+| `paid_activation`         | TINYINT | Yes | If its on then (`1`) student will pay the activation fee or else it will be `0` |
+| `paid_activation_fees`    | DECIMAL | Yes | Activation fees for student  |
+| `paid_enrollment`         | TINYINT | Yes | Paid Enrollement is on > `1` off >  `0` |
+| `allow_edit_pickup`       | INT     | Yes | School allows edit pickup on > `1` Off > `0` |
+| `payfast_merchant_id`     | VARCHAR | Yes | Payfast Merchant ID for the school |
+| `payfast_merchant_key`    | VARCHAR | Yes | Payfast Merchant Key for the school |
+| `payfast_passphrase`      | VARCHAR | Yes | Payfast Passphrase for the school |
+| `payfast_environment`     | VARCHAR | Yes | Payfast Environment `sandbox` `live` |
+| `province_code`           | VARCHAR | Yes  | Provinces code for a School   |
+| `allowed_inactive_days`   | INT     | Yes  | How many days student can inactive  |
+| `sms_enabled`             | INT     | Yes  | SMS will be  on > `1` Off > `0`   |
+| `paystack_public_key`     | VARCHAR | Yes  | Paystack Public Key for the school |
+| `paystack_secret_key`     | VARCHAR | Yes | Paystack Secret Key for the school |
+| `stripe_public_key`       | VARCHAR | Yes | Stripe Public Key for the school |
+| `stripe_secret_key`       | VARCHAR | Yes | Stripe Secret Key for the school |
+| `paypal_client_id`        | VARCHAR | Yes | Paypal Client ID for the school |
+| `paypal_secret_key`       | VARCHAR | Yes | Paypal Secret Key for the school |
+| `chat_enabled`            | INT     | Yes | Chat will be  on > `1` Off > `0`   |
+| `whatsapp_enabled`        | INT     | Yes |  WhatsApp will be  on > `1` Off > `0`   |
+| `whatsapp_username`       | VARCHAR | Yes | Whatsapp username for the school |
+| `whatsapp_password`       | VARCHAR | Yes | Whatsapp password for the school |
+| `signup_url`              | VARCHAR | Yes | For Student or Instructor sign up URl |
+| `signin_url`              | VARCHAR | Yes | For Student or Instructor sign in URl |
+| `notify_url`              | VARCHAR | Yes | For Student or Instructor notify URl |
+| `cash`                    | ENUM    | Yes | If its on then (`1`) student will pay the cash or else it will be `0` |
+| `bank_transfer`           | ENUM    | Yes | If its on then (`1`) student can bank transfer or else it will be `0` |
+| `payment_gateway`         | ENUM    | Yes | If its on then (`1`) student will pay the payment gateway or else it will be `0` |
+| `stripe_gateway`          | ENUM    | Yes | `1` Enable Stripe Gateway `0` Disable Stripe Gateway |
+| `paystack_gateway`        | ENUM    | Yes | `1` Enable Paystack Gateway `0` Disable Paystack Gateway |
+| `payfast_gateway`         | ENUM    | Yes | `1` Enable Payfast Gateway `0` Disable Payfast Gateway |
+| `paypal_gateway`          | ENUM    | Yes | `1` Enable PayPal Gateway `0` Disable PayPal Gateway |
+| `paynow_gateway`          | ENUM    | Yes | `1` Enable Paynow Gateway `0` Disable Paynow Gateway |
+| `cash_instruction`        | VARCHAR | Yes | Description of Cash payment  |
+| `banktransfer_instruction`| VARCHAR | Yes | Description of Bank Transfer payment  |
+| `product_tour_enabled`    | INT     | Yes | `1` Enable Product Tour `0` Disable Product Tour |
+| `marketplace_enabled`     | INT     | Yes | `1` Enable Marketplace `0` Disable Marketplace |
+| `paynow_integration_id`   | VARCHAR | Yes | Paynow Integration ID for the school |
+| `paynow_integration_key`  | VARCHAR | Yes | Paynow Integration Key for the school |
+| `paynow_test_email`       | VARCHAR | Yes | Paynow Test Email for the school |
+
+
+### sessioninstructor
+
+This Table Manages the relationship between sessions and instructors
+
+| Column          | Datatype   |Mandatory	| Description                                    |
+|--------------   |:----------:|:---------:|------------------------------------------------|
+| `id`              | INT     | Yes | Unique identifier for each session-instructor assignment |
+| `session`         | INT     | Yes | Indicates which session the instructor is assigned to |
+| `instructor`      | INT     | Yes | Represents the instructor assigned to the session |
+| `created_at`      |TIMESTAMP| Yes | Datetime of record creation              |
+| `updated_at`      | DATETIME| No  | Datetime of last update             |
+| `created_by`      | INT     | Yes | Identifies the user who created the record      |
+| `updated_by`      | INT     | Yes | Identifies the user who last updated the record      |
+| `deleted`         | TINYINT | No  | Soft delete flag (`0` = not deleted, `1` = deleted)     |
+
+### sessions
+
+This Table to track and organize sessions across different contexts
+
+| Column          | Datatype   |Mandatory	| Description                                    |
+|--------------   |:----------:|:---------:|------------------------------------------------|
+| `id`          | INT     | Yes | Unique identifier for each session |
+| `school`      | INT     | Yes | References the school hosting the session |
+| `branch`      | INT     | Yes | References the specific branch where the session occurs |
+| `start_date`  | DATE    | Yes | Indicates the Start day of the session |
+| `end_date`    | DATE    | Yes |Indicates the End day of the session |
+| `course`      | INT     | No  | reference to the associated course |
+| `class_type`  | ENUM    | Yes | `Partical` or `Theory` |
+| `map_url`     | LONGTEXT | No  | reference to geographical location |
+| `location`    | LONGTEXT| Yes | Detailed location description |
+| `name`        | VARCHAR  | Yes |  Title for the session |
+| `session_type`| ENUM    | No  | `in-person`, `group` |
+| `days`        | LONGTEXT| Yes | Specific days of session occurrence |
+| `duration`    | INT     | Yes | Length of the session in minutes |
+| `start_time`  | VARCHAR | Yes | Specifies the session's start time |
+| `occurence`   | ENUM    | Yes | Defines the session's recurrence pattern  `allweekday`, `weekend`, `specific`|
+| `status`      | ENUM    | Yes | `new`, `inprogress`, `completed` |
+| `created_at`  |TIMESTAMP| Yes | Datetime of record creation              |
+| `updated_at`  | DATETIME| No  | Datetime of last update             |
+| `created_by`  | INT     | Yes | Identifies the user who created the record      |
+| `updated_by`  | INT     | Yes | Identifies the user who last updated the record      |
+| `deleted`     | TINYINT | No  | Soft delete flag (`0` = not deleted, `1` = deleted)     |
+
+
+### slotenrolled
+
+This table stored student enrollment in specific session slots, providing detailed tracking of student participation and progress
+
+| Column          | Datatype   |Mandatory	| Description                                    |
+|--------------   |:----------:|:---------:|------------------------------------------------|
+| `id`          | INT     | Yes | Unique identifier for each enrollment record |
+| `session`     | INT     | Yes | References the specific session |
+| `student`     | INT     | Yes | References the student enrolled in the slot |
+| `slot`        | INT     | Yes | Identifies the specific slot within the session|
+| `completed`   | TINYINT | Yes | Tracks whether the student has completed the slot |
+| `created_at`  |DATETIME | Yes | Datetime of record creation              |
+| `updated_at`  | DATETIME| No  | Datetime of last update             |
+| `created_by`  | INT     | Yes | Identifies the user who created the record      |
+| `updated_by`  | INT     | Yes | Identifies the user who last updated the record      |
+| `deleted`     | TINYINT | No  | Soft delete flag (`0` = not deleted, `1` = deleted)     |
+
+### slotnotes
+
+This Table support complex communication scenarios with multiple recipients and detailed tracking.
+
+| Column          | Datatype   |Mandatory	| Description                                    |
+|--------------   |:----------:|:---------:|------------------------------------------------|
+| `id`           | INT       | Yes | Unique identifier for each note |
+| `note_to`      | VARCHAR   | No  | text-based recipient identifier |
+| `content`      | MEDIUMTEXT| Yes | Main body of the note |
+| `note_from`    | INT       | Yes | Unique identifier for each enrollment record |
+| `note_to_X`    | INT       | Yes | Allows up to 10 simultaneous recipients |
+| `sent`         | INT       | Yes | Tracks sending status  |
+| `signature_url`| VARCHAR   | No  | URL for digital signature |
+| `slot_id`      | INT       | Yes | Provides contextual information |
+| `created_at`   |DATETIME   | Yes | Datetime of record creation              |
+| `updated_at`   | DATETIME  | No  | Datetime of last update             |
+| `created_by`   | INT       | Yes | Identifies the user who created the record      |
+| `updated_by`   | INT       | Yes | Identifies the user who last updated the record      |
+| `removed`      | TINYINT   | No  | Soft delete flag (`0` = not deleted, `1` = deleted)     |
+
