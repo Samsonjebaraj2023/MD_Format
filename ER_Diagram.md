@@ -14,7 +14,7 @@ The Below diagram shows the key relationships in the purchase process:
 2. Each payment can create a student payment record
 3. Each payment can generate an invoice
 
-![Payment Diagarm](Payment.png)
+![Payment Diagarm](payment.png)
 -----------------------------------------------------------
 
 ## Session/Slot Flow Diagram
@@ -46,10 +46,25 @@ Course Purchase Flow Explanation:
 ### Relationship Flow:
 
 
-- When a user purchases a course:
-   - A record is created in COURSE_ENROLLED
+- When a Student purchases a course:
+   - A record is created in COURSESENROLLED
    - Automatically generates a notification
    - Adds an entry to the mail queue for sending confirmation email
    - Creates a timeline entry for student activity
 
 ![Coursesflow Diagarm](Courses.png)
+--------------------------------------------------------
+## Product Purchase Flow Diagram
+
+- A single USER can purchase multiple PRODUCTS (one-to-many relationship)
+- Each PRODUCT_ENROLLED entry can generate multiple NOTIFICATIONS
+- Each PRODUCT_ENROLLED entry can create multiple TIMELINE entries
+
+### Relationship Flow:
+
+- When a Student purchases a Product:
+   - A record is created in PRODUCT_ENROLLED
+   - Automatically generates a notification
+   - Creates a timeline entry for student activity
+
+![Product Diagarm](Product.png)
