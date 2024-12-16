@@ -1,10 +1,10 @@
-# Driveez DataBase Structure
+# Driveez Tenant DataBase Structure
 
 Here is a detailed overview of Tables and columns in the Driveez database:
 
-### Availability 
+### availability 
 
-The `availability` table is designed to track instructor availability and special day schedules across different branches and schools. It allows for flexible scheduling management with detailed time and status tracking
+This table Used to track instructor availability and special day schedules across different branches and schools. It allows for flexible scheduling management with detailed time and status tracking
 
 | Column       | Datatype   |Mandatory	| Description                                                  |
 |--------------|:----------:|:---------:|--------------------------------------------------------|
@@ -12,13 +12,13 @@ The `availability` table is designed to track instructor availability and specia
 | `branch`     | INT        | Yes | Indicates the branch                                         |
 | `school`     | INT        | Yes | Specifies the school                                         |
 | `instructor` | INT        | Yes | Identifies the instructor                                    |
-| `type`       | ENUM       | Yes | Regular availability or specialday                           |
+| `type`       | ENUM       | Yes | Specifies the type `availability` `specialday`                         |
 | `special_date` | DATE      | No | Used for specific date-based availability or special day scheduling |
 | `sub`        | INT        | No | Potentially used for substitute instructor tracking          |
 | `day_of_week`| ENUM       | Yes | It specifies the day of a week                               |
 | `start_time` | TIME       | Yes | Time of availability start                                   |
 | `end_time`   | TIME       | Yes | Time of availability end                                     |
-| `status`     | ENUM       | Yes | It specifies Opened or Closed                                |
+| `status`     | ENUM       | Yes | It specifies `Opened` or `Closed`                              |
 | `created_at` | DATETIME   | Yes | Datetime of record creation                                  |
 | `updated_at` | DATETIME   | No | Datetime of last update                                      |
 | `created_by` | INT        | Yes | Identifies the user who created the record                   |
@@ -37,7 +37,7 @@ This Table to store attachments associated with branches, tracking document uplo
 | `attachment_for`| INT        | Yes | ID of the branch to which the attachment is linked   |
 | `attachment`    | VARCHAR    | Yes | path of the uploaded attachment in S3             |
 | `name`          | VARCHAR    | Yes | Display name of the attachment    |
-| `type`          | ENUM       | Yes | Type of attachment (currently limited to 'document')      |
+| `type`          | ENUM       | Yes | Type of attachment (currently limited to `document`)      |
 | `created_at`    | DATETIME   | Yes | Datetime of record creation              |
 | `updated_at`    | DATETIME   | No  | Datetime of last update             |
 | `deleted`       | TINYINT    | No  | Soft delete flag (`0` = not deleted, `1` = deleted)     |
@@ -299,7 +299,7 @@ This table is will track payment transactions, specifically for PayFast payment 
 | Column          | Datatype   |Mandatory	| Description                                    |
 |--------------   |:----------:|:---------:|------------------------------------------------|
 | `id`              | INT     | Yes | Unique identifier for each transaction |
-| `m_payment_id`    | INT     | Yes | Unique identifier for each notification |
+| `m_payment_id`    | INT     | Yes | Refers to a Payment table ID |
 | `pf_payment_id`   | INT     | Yes | PayFast-specific payment identifier |
 | `payment_status`  |VARCHAR  | Yes | Tracks the current status of the payment |
 | `item_name`       | LONGTEXT| Yes | Name of the purchased item |
@@ -802,10 +802,10 @@ This table used to store a students , instructor , admin , super admin informati
 | `activated`              | TINYINT | No  | Paystack Secret Key for the school |
 | `province_code`          | VARCHAR | No  | Province code |
 | `country_code`           | VARCHAR | No  | Country code |
-| `display_name`           | VARCHAR | No  | Display name fname first letter + lname first letter |
+| `display_name`           | VARCHAR | No  | Display name (fname first letter + lname first letter) |
 | `enable_scheduling`      | TINYINT | No  | Paypal Secret Key for the school |
 | `pickup_location`        |VARCHAR  | No  | Chat will be  on > `1` Off > `0`   |
-| `zipcode`                |VARCHAR  | No  |  WhatsApp will be  on > `1` Off > `0`   |
+| `zipcode`                |VARCHAR  | No  | Specific geographic location  |
 | `vehicle_category`       | ENUM    | No  | Type of vehicle `Geared(Manual)`,`Non-Geared(Automatic)`,`Light Motor Vehicle`,`Good Vehicle`,`Heavy Vehicle`,`Passenger Vehicles`,`Commercial Vehicles`,`Heavy Trucks`,`Light Trucks`  |
 | `availability`           | VARCHAR | No  | User's availability |
 | `gearbox_type`           | ENUM    | No  |  Manual or automatic transmission (`manual`,`automatic`) |
