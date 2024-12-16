@@ -443,6 +443,8 @@ This table tracks communication messages sent within the school system, capturin
 
 ### schools
 
+This table will store and manage information about schools site setting , including their names, addresses,Payments gateway and other relevant details. 
+
  Column          | Datatype   |Mandatory	| Description                                    |
 |--------------   |:----------:|:---------:|------------------------------------------------|
 | `id`                      | INT     | Yes | Unique identifier for each school record |
@@ -580,3 +582,247 @@ This Table support complex communication scenarios with multiple recipients and 
 | `updated_by`   | INT       | Yes | Identifies the user who last updated the record      |
 | `removed`      | TINYINT   | No  | Soft delete flag (`0` = not deleted, `1` = deleted)     |
 
+### slots
+
+This Table will stores the slots for student and instructor 
+
+| Column          | Datatype   |Mandatory	| Description                                    |
+|--------------   |:----------:|:---------:|------------------------------------------------|
+| `id`          | INT     | Yes | Unique identifier for each Slots|
+| `session`     | INT     | Yes | Session Id for slots |
+| `date`        | DATE    | Yes | Stores the date of the slot |
+| `duration`    | INT     | Yes | Duration of a slot in minutes|
+| `start_time`  | TIME    | Yes | Start time of the slot |
+| `status`      | ENUM    | Yes | `new` or `completed`|
+| `created_at`  |DATETIME | Yes | Datetime of record creation              |
+| `updated_at`  | DATETIME| Yes | Datetime of last update             |
+| `created_by`  | INT     | No  | Identifies the user who created the record      |
+| `updated_by`  | INT     | No  | Identifies the user who last updated the record      |
+| `deleted`     | TINYINT | No  | Soft delete flag (`0` = not deleted, `1` = deleted)     |
+
+### studentform 
+
+This table Used to store student form submissions, registration system for students
+
+| Column          | Datatype   |Mandatory	| Description                                    |
+|--------------   |:----------:|:---------:|------------------------------------------------|
+| `id`           | INT     | Yes | Unique identifier for each form submission|
+| `school`       | INT     | Yes | Represents a school ID|
+| `formdata`     | LONGTEXT| Yes | Stores the main form data|
+| `formdata_temp`| LONGTEXT| Yes | Appears to be a temporary storage for form data|
+| `created_on`   |DATETIME | No  | Datetime of record creation              |
+| `updated_on`   | DATETIME| No  | Datetime of last update             |
+
+### studentpayments
+
+This table used to track and record student payment transactions across different schools, branches, and invoices
+
+| Column          | Datatype   |Mandatory	| Description                                    |
+|--------------   |:----------:|:---------:|------------------------------------------------|
+| `id`          | INT     | Yes | Unique identifier for each payment record|
+| `school`      | INT     | Yes | Identifies the school associated with the payment|
+| `branch`      | INT     | Yes | Specifies the branch where the payment was made|
+| `student`     | INT     | Yes | References the student making the payment|
+| `invoice`     | INT     | Yes | Links the payment to a specific invoice|
+| `amount`      | INT     | Yes | Payment amount |
+| `method`      | VARCHAR | Yes | Payment method (e.g., `cash`, `bank transfer` , `Paystack` , `Stripe` ..)|
+| `created_at`  |DATETIME | No  | Datetime of record creation              |
+| `updated_at`  | DATETIME| No  | Datetime of last update             |
+| `deleted`     | TINYINT | No  | Soft delete flag (`0` = not deleted, `1` = deleted)     |
+| `created_by`  | INT     | No  | Identifies the user who created the record      |
+| `updated_by`  | INT     | No  | Identifies the user who last updated the record      |
+
+### studentpickup
+
+This table used to manage student pickup information for Driving school management systems
+
+| Column          | Datatype   |Mandatory	| Description                                    |
+|--------------   |:----------:|:---------:|------------------------------------------------|
+| `id`          | INT      | Yes | Unique identifier for each student pickup record|
+| `map_url`     | LONGTEXT | Yes | Detailed map information related to the pickup locationd|
+| `slot`        | INT      | Yes | Represents a specific pickup slot ID|
+| `student`     | INT      | Yes | References the student associated with this pickup record|
+| `created_at`  |DATETIME  | No  | Datetime of record creation              |
+| `updated_at`  | DATETIME | No  | Datetime of last update             |
+| `removed`     | INT      | No  | Flag to indicate if the pickup record has been removed (`0` = active,  other values for different removal states)  |
+| `created_by`  | INT      | No  | References the user who created the pickup record     |
+| `updated_by`  | INT      | No  | References the user who last updated the pickup record      |
+
+### system
+
+This Table store the database version
+
+| Column          | Datatype   |Mandatory	| Description                                    |
+|--------------   |:----------:|:---------:|------------------------------------------------|
+| `db_version`    | INT      | No | Stores the current version of the database schema|
+
+### tickets
+
+This table used to manage and track support, billing, or other types of tickets across different schools and branches
+
+| Column          | Datatype   |Mandatory	| Description                                    |
+|--------------   |:----------:|:---------:|------------------------------------------------|
+| `id`          | INT     | Yes |  Unique internal identifier for each ticket|
+| `school`      | INT     | Yes | Identifies the school associated with the ticket|
+| `branch`      | INT     | Yes | Specifies the branch related to the ticket|
+| `ticket_no`   | INT     | Yes | External ticket number for reference and tracking|
+| `type`        | ENUM    | Yes | Categorizes the ticket's primary purpose  `support`, `billing`, `others`|
+| `issue_type`  | ENUM    | Yes | Specifies the nature of the ticket `bug`, `features`, `enhancement`|
+| `priority`    | ENUM    | Yes | Indicates the ticket's urgency level `low`, `high`, `urgent`|
+| `status`      | ENUM    | Yes | Current state of the ticket `opened`, `inprogress`, `resloved`, `closed`|
+| `summary`     | TEXT    | Yes | Short description or title of the ticket|
+| `description` | LONGTEXT| Yes | Detailed explanation of the ticket issue|
+| `created_at`  |DATETIME | No  | Datetime of record creation              |
+| `updated_at`  | DATETIME| No  | Datetime of last update             |
+| `deleted`     | TINYINT | No  | Soft delete flag (`0` = not deleted, `1` = deleted)     |
+| `created_by`  | INT     | No  | Identifies the user who created the record      |
+| `updated_by`  | INT     | No  | Identifies the user who last updated the record      |
+
+### ticketsattachments
+
+This table used to manage and store attachments associated with support tickets.
+
+| Column          | Datatype   |Mandatory	| Description                                    |
+|--------------   |:----------:|:---------:|------------------------------------------------|
+| `id`              | INT     | Yes | Unique internal identifier for each attachment record|
+| `uploaded_by`     | INT     | Yes | References the user who uploaded the attachment|
+| `attachment_for`  | INT     | Yes |  Links the attachment to a specific ticket|
+| `attachment`      | VARCHAR | Yes |  Path of the uploaded attachment|
+| `created_at`      |DATETIME | No  | Datetime of record creation              |
+| `updated_at`      | DATETIME| No  | Datetime of last update             |
+| `deleted`         | TINYINT | No  | Soft delete flag (`0` = not deleted, `1` = deleted)     |
+| `created_by`      | INT     | No  | Identifies the user who created the record      |
+| `updated_by`      | INT     | No  | Identifies the user who last updated the record      |
+
+### timeline
+
+This table is designed to track and log user activities or events in a ordered manner
+
+| Column          | Datatype   |Mandatory	| Description                                    |
+|--------------   |:----------:|:---------:|------------------------------------------------|
+| `id`           | INT     | Yes | Unique internal identifier for each timeline entry|
+| `user`         | INT     | Yes | References the user associated with the activity|
+| `activity`     | TEXT    | Yes | details of the student's activity|
+| `created_at`   |TIMESTAMP| No  | Timestamp of record creation              |
+
+### timezones
+
+This table used to store and manage timezone information for geographical regions
+
+| Column          | Datatype   |Mandatory	| Description                                    |
+|--------------   |:----------:|:---------:|------------------------------------------------|
+| `id`           | INT     | Yes | Unique identifier for each timezone entry|
+| `name`         | VARCHAR | Yes | Identifier for the timezone like  `EST`, `PST`, `UTC`|
+| `zone`         | VARCHAR | Yes | Geographical zone identifier like `America/New_York`, `Asia/Kolkata`|
+
+### userattachments
+
+This table used to manage and store user-related attachments, primarily for documents and certificates associated with users and their course enrollments.
+
+| Column          | Datatype   |Mandatory	| Description                                    |
+|--------------   |:----------:|:---------:|------------------------------------------------|
+| `id`              | INT     | Yes | Unique identifier for each userattachments|
+| `uploaded_by`     | INT     | Yes | References the user who uploaded the attachment|
+| `attachment_for`  | INT     | Yes | Identifies the user to whom the attachment is associated|
+| `name`            | VARCHAR | Yes | Name of the attachment|
+| `attachment`      |VARCHAR  | Yes | Path of the uploaded attachment|
+| `type`            | ENUM    | Yes | Categorizes the type of attachment `document`, `certificate` |
+| `courseenrolled`  | INT     | No  | References the specific course enrollment associated with the attachment|
+| `created_at`      |DATETIME | No  | Datetime of record creation              |
+| `updated_at`      | DATETIME| No  | Datetime of last update             |
+| `deleted`         | TINYINT | No  | Soft delete flag (`0` = not deleted, `1` = deleted)     |
+| `created_by`      | INT     | No  | Identifies the user who created the record      |
+| `updated_by`      | INT     | No  | Identifies the user who last updated the record      |
+
+### usermessages
+
+This table used to manage and track communication messages sent to students across different communication channels
+
+| Column          | Datatype   |Mandatory	| Description                                    |
+|--------------   |:----------:|:---------:|------------------------------------------------|
+| `id`                | INT      | Yes | Unique identifier for each usermessages|
+| `receiver`          | INT      | Yes | References the user who is the recipient of the message|
+| `type`              | ENUM     | Yes | Specifies the communication channel used `sms`, `email`|
+| `contact`           |  VARCHAR | Yes | Contact information (phone number or email address) used for sending the message|
+| `subject`           |  VARCHAR | No  | Subject line of the message|
+| `message`           |LONGTEXT  | No  | Full content of the message|
+| `sent_at`           | TIMESTAMP| Yes | Timestamp of when the message was sent or queued|
+| `status`            | ENUM     | Yes | Current status of the message transmission `Failed`, `Queued`, `Sending`|
+| `school`            | INT      | Yes | Identifies the school associated with the message|
+| `branch`            | INT      | Yes |  Specifies the branch related to the message|
+| `view_type`         |  VARCHAR | No  | Additional classification or view type for the message|
+
+### usernotes
+
+This table is used to manage and store notes created about or for students within the system
+
+| Column          | Datatype   |Mandatory	| Description                                    |
+|--------------   |:----------:|:---------:|------------------------------------------------|
+| `id`              | INT      | Yes | Unique identifier for each usernotes|
+| `note_by`         | INT      | Yes | References the user who created the note|
+| `note_for`        | INT      | Yes | References the user about whom the note is written|
+| `note`            | TEXT     | Yes | Content of the note|
+| `created_at`      |TIMESTAMP | Yes | Datetime of record creation              |
+| `updated_at`      | DATETIME | No  | Datetime of last update             |
+| `deleted`         | TINYINT  | No  | Soft delete flag (`0` = not deleted, `1` = deleted)     |
+| `created_by`      | INT      | No  | Identifies the user who created the record      |
+| `updated_by`      | INT      | No  | Identifies the user who last updated the record      |
+
+### users
+
+This table used to store a students , instructor , admin , super admin information and also stores various user roles and their associated metadata
+
+| Column          | Datatype   |Mandatory	| Description                                    |
+|--------------   |:----------:|:---------:|------------------------------------------------|
+| `id`                     | INT     | Yes | Unique identifier for each school record |
+| `fname`                  | VARCHAR | Yes | First name |
+| `lname`                  | VARCHAR | Yes | Second Name |
+| `email`                  | VARCHAR | Yes | Unique email address  |
+| `gender`                 |  ENUM   | No  | User's gender |
+| `date_of_birth`          | DATE    | No  | User's birth date |
+| `phone`                  | VARCHAR | No  |  Contact phone number |
+| `address`                | VARCHAR | No  | User's physical address |
+| `password`               | VARCHAR | Yes | Encrypted password storage` |
+| `avatar`                 | VARCHAR | No  | URL of user's profile picture |
+| `token`                  | VARCHAR | No  |  Authentication token |
+| `school`                 | INT     | No  | Associated school ID |
+| `branch`                 | INT     | No  | Associated branch ID |
+| `course`                 | VARCHAR | No  | Course information  |
+| `role`                   | ENUM    | No  |  User role (`student`, `instructor`, `admin`,`staff`,`instructor admin`, `super admin`) |
+| `position`               | VARCHAR | No  | User's position |
+| `permissions`            | VARCHAR | No  | Special permissions |
+| `status`                 | ENUM    | No  | Current status of a user `active`,`inactive`,`registered` |
+| `lastnotification`       |DATETIME | No  | Timestamp of last notification |
+| `lang`                   | VARCHAR | No  |  Language preference (default `en_US`) |
+| `created_at`             | DATETIME| No  | Automatically records when the User record was created |
+| `emergency_contact_name` | VARCHAR | No   |Name of emergency contact |
+| `emergency_contact_phone`| VARCHAR | No   | Phone number of emergency contact  |
+| `device_token`           | VARCHAR | No   | Mobile device token |
+| `firebase_uid`           | VARCHAR | No   | Firebase authentication ID |
+| `activated`              | TINYINT | No  | Paystack Secret Key for the school |
+| `province_code`          | VARCHAR | No  | Province code |
+| `country_code`           | VARCHAR | No  | Country code |
+| `display_name`           | VARCHAR | No  | Display name fname first letter + lname first letter |
+| `enable_scheduling`      | TINYINT | No  | Paypal Secret Key for the school |
+| `pickup_location`        |VARCHAR  | No  | Chat will be  on > `1` Off > `0`   |
+| `zipcode`                |VARCHAR  | No  |  WhatsApp will be  on > `1` Off > `0`   |
+| `vehicle_category`       | ENUM    | No  | Type of vehicle `Geared(Manual)`,`Non-Geared(Automatic)`,`Light Motor Vehicle`,`Good Vehicle`,`Heavy Vehicle`,`Passenger Vehicles`,`Commercial Vehicles`,`Heavy Trucks`,`Light Trucks`  |
+| `availability`           | VARCHAR | No  | User's availability |
+| `gearbox_type`           | ENUM    | No  |  Manual or automatic transmission (`manual`,`automatic`) |
+| `updated_at`             | DATETIME| No  | Datetime of last update             |
+| `deleted`                | TINYINT | No  | Soft delete flag (`0` = not deleted, `1` = deleted)     |
+| `created_by`             | INT     | No  | Identifies the user who created the record      |
+| `updated_by`             | INT     | No  | Identifies the user who last updated the record      |
+| `imported`               | TINYINT | No  |  |
+| `customX`                | TEXT    | No  | Multiple `custom1` to `custom20` fields for additional data |
+| `last_login`             | DATETIME| No  | Timestamp of last login |
+| `importedX`              | TEXT    | No  | `imported1` to `imported5` fields for imported data |
+| `availability_start`     | TIME    | No  | Start of availability time |
+| `availability_end`       | TIME    | No  | End of availability time |
+| `location_serviced`      | VARCHAR | No  | Service location |
+| `language_known`         | VARCHAR | No  |  Languages spoken |
+| `hourly_rate`            | INT     | No  | Hourly rate for services |
+| `vehicle_type`           | VARCHAR | No  | Type of vehicle |
+| `driving_license`        | VARCHAR | No  | Driving license details  |
+| `driving_exp_date`       | DATE    | No  | Driving license expiration date  |
+| `about_me`               | TEXT    | No  | Personal description |
