@@ -1,6 +1,8 @@
 # Driveez Tenant DataBase Structure
 
-Here is a detailed overview of Tables and columns in the Driveez database:
+Here is a detailed overview of Tables and columns in the Driveez tenant database:
+
+As of now there are 42 tables in the Driveez tenant database. Below is a list of the tables and their respective columns:
 
 ### availability 
 
@@ -8,7 +10,7 @@ This table Used to track instructor availability and special day schedules acros
 
 | Column       | Datatype   |Mandatory	| Description                                                  |
 |--------------|:----------:|:---------:|--------------------------------------------------------|
-| `ID`         | INT        | Yes | Primary key of the table                                     |
+| `id`         | INT        | Yes | Primary key of the table                                     |
 | `branch`     | INT        | Yes | Indicates the branch                                         |
 | `school`     | INT        | Yes | Specifies the school                                         |
 | `instructor` | INT        | Yes | Identifies the instructor                                    |
@@ -32,7 +34,7 @@ This Table to store attachments associated with branches, tracking document uplo
 
 | Column          | Datatype   |Mandatory	| Description                                    |
 |--------------   |:----------:|:---------: |------------------------------------------------|
-| `ID`            | INT        | Yes | Primary key of the table          |
+| `id`            | INT        | Yes | Primary key of the table          |
 | `uploaded_by`   | INT        | Yes | ID of the user who uploaded |
 | `attachment_for`| INT        | Yes | ID of the branch to which the attachment is linked   |
 | `attachment`    | VARCHAR    | Yes | path of the uploaded attachment in S3             |
@@ -50,7 +52,7 @@ This table stores information about different branches, including their contact 
 
 | Column          | Datatype   |Mandatory	| Description                                    |
 |--------------   |:----------:|:---------: |------------------------------------------------|
-| `ID`            | INT        | Yes | Primary key of the table          |
+| `id`            | INT        | Yes | Primary key of the table          |
 | `name`          | VARCHAR    | Yes | Name of the branch      |
 | `school`        | INT        | Yes | ID of the school to which the branch belongs    |
 | `email`         | VARCHAR    | Yes | Contact email address of the branch        |
@@ -93,7 +95,7 @@ This table stores information about different countries, providing a comprehensi
 
 | Column          | Datatype   |Mandatory	| Description                                    |
 |--------------   |:----------:|:---------:|------------------------------------------------|
-| `Id`            | INT        | Yes | Unique identifier for each country record   |
+| `id`            | INT        | Yes | Unique identifier for each country record   |
 | `code`          | VARCHAR    | Yes | Short country code like `India` > `IND`  |
 | `name`          | VARCHAR    | Yes |  Full name of the country   |
 
@@ -104,7 +106,7 @@ This table stores detailed information about province within different countries
 
 | Column          | Datatype   |Mandatory	| Description                                    |
 |--------------   |:----------:|:---------:|------------------------------------------------|
-| `Id`            | INT        | Yes | Unique identifier for each countryprovinces records  |
+| `id`            | INT        | Yes | Unique identifier for each countryprovinces records  |
 | `name`          | VARCHAR   | Yes | Full name of the province  |
 | `gst`           | DECIMAL    | No  | Goods and Services Tax (GST) rate for the province   |
 | `pst`           | DECIMAL     | No  | Provincial Sales Tax (PST) rate   |
@@ -118,7 +120,7 @@ This table stores comprehensive information about courses offered by schools and
 
 | Column          | Datatype   |Mandatory	| Description                                    |
 |--------------   |:----------:|:---------:|------------------------------------------------|
-| `Id`                | INT        | Yes | Unique identifier for each Course record  |
+| `id`                | INT        | Yes | Unique identifier for each Course record  |
 | `school`            | INT        | Yes | ID of the school offering the course  |
 | `branch`            | INT        | Yes | ID of the branch offering the course  |
 | `name`              | VARCHAR    | Yes | Full name of the course  |
